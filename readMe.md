@@ -193,7 +193,7 @@ module.exports = {
 }
 ```
 
-### 1.4.2 拆分 css
+### 4.2 拆分 css
 >以上方式 css 代码是以 \<style\> 标签的方式插入到 html 文件当中，如果样式文件很多，全部添加到 html 中，难免显得混乱。这时候我们想用外链形式引入 css 文件怎么做呢？就用到一个插件：
 
 `npm i -D mini-css-extract-plugin@1`
@@ -223,4 +223,36 @@ plugins: [
 		chunkFilename: "[id].css"
 	})
 ]
+```
+> `npm run build` 打包完成，多个 css 文件会合并成一个 css 文件，使用 &lt;style&gt; 标签插入到 html 文件中
+### 4.3 拆分多个 css (未成功 ，extract-text-webpack-plugin 已不支持 webpack4？)
+> 以上方式使用 mini-css-extract-plugin 将几个css 文件打包在一个 css 文件中，如果想分开对应多个 css 文件，我们需要使用 `npm i -D extract-text-webpack-plugin`  
+webpack.config.js 片段：
+```js
+ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+ let indexLess = new ExtractTextWebpackPlugin('index.less');
+ let indexCss = new ExtractTextWebpackPlugin('index.css');
+ module.exports = {
+	 // 。。。省略一些代码
+	 module:{
+		 rules:[
+			 {
+				 test:/\.css$/,
+				 use: indexCss.extract({
+					 use: ['css-loader']
+				 })
+			 },
+			 {
+				 test:/\.less$/,
+				 use: indexLess.extract({
+					 use:['css-loader', 'less-loader']
+				 })
+			 }
+		 ]
+	 },
+	 plulgins: [
+		 indexLess,
+		 indexCss
+	 ]
+ }
 ```

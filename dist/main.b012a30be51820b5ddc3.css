@@ -1,7 +1,9 @@
-*,html {
-	margin: 0;
-	padding: 0;
+*,
+html {
+  margin: 0;
+  padding: 0;
 }
+
 .cWpBlue {
   color: #62b1d8;
 }
