@@ -13,6 +13,18 @@ module.exports = {
 		filename: '[name].[hash:8].js', // 打包后文件名称
 		path: path.resolve(__dirname, '../dist') // 打包后的目录
 	},
+	module:{
+		rules:[
+			{
+				test: /\.css$/, //正则匹配文件名称（类型）
+				use: ['style-loader', 'css-loader'] // 从右向左 ← 解析原则
+			},
+			{
+				test: /\.less$/,
+				use: ['style-loader', 'css-loader', 'less-loader']
+			}
+		],
+	},
 	plugins: [
 		// new HtmlWebpackPlugin({
 		// 	template: path.resolve(__dirname, '../public/index.html')
