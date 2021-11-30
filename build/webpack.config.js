@@ -21,7 +21,16 @@ module.exports = {
 			},
 			{
 				test: /\.less$/,
-				use: ['style-loader', 'css-loader', 'less-loader']
+				use: ['style-loader', 'css-loader', 
+				{	//加入此对象来引入 postcss-loader 和 autoprefixer 插件
+					loader: 'postcss-loader',
+					options:{
+						postcssOptions: { // 注意 plugins 外面要套一个对象 postcssOptions
+							plugins:[require('autoprefixer')]
+						}
+					}
+				},
+				'less-loader']
 			}
 		],
 	},

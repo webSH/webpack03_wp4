@@ -4,11 +4,11 @@
 > 	- webpack: "4.46.0"
 > 	- webpack-cli: "4.9.1"
 > 	- html-webpack-plugin: "4.5.2" //版本 ^5 需要 webpack5 支持
-> 	- css-loader: ^5.0.2,
-> 	- html-webpack-plugin: ^4.5.2",
-> 	- less: ^4.1.2",
-> 	- less-loader: ^7.3.0",
-> 	- style-loader: ^2.0.0",
+> 	- css-loader: ^5.0.2
+> 	- less: ^4.1.2"
+> 	- less-loader: ^7.3.0"
+> 	- style-loader: ^2.0.0"
+> 	- postcss-loader: 4.3.0
 ## 1.建立项目
 - 新建文件夹：webpack03_wp4
 - 初始化 npm：在此目录命令行执行 `npm init`，一路回车。根目录生成 package.json 文件
@@ -120,13 +120,13 @@ mudule.exports = {
 我们的入口文件是 js，所以我们在入口 js 文件中引入我们的 css 文件  
 main.js 头部使用 import 引入
 ```js
-import './assets/index.css' // wp4 wp5 正确路径 ../；  ./ 会在 main.js 的 src/ 本目录来寻找文件
-import './assets/index.less'
+import '../assets/index.css' // 正确路径 ../； ./ 是在 main.js 的 src/ 本目录来寻找文件
+import '../assets/index.less'
 ```
 同时，我们也需要一些 loader 来解析我们的 css 文件
-`npm i -D style-loader css-loader`
+`npm i -D style-loader@2 css-loader@5`
 如果 less 文件的话，需要多安装两个：
-`npm i -D less less-loader`
+`npm i -D less@4 less-loader@7`
 配置文件 webpack.config.js 片段如下：
 ```js
 mudule.exports = {
@@ -146,3 +146,48 @@ mudule.exports = {
 }
 ```
 `npm run build` 注意，生成的css是以 \<style\> 标签的方式插入到 \<script\> 标签之后，每个 css 文件一个 \<style\> 标签。而且是通过 js 插入到，并不是直接打包到 html 文件中的。（如果不引入 loader，打包将不会成功）
+
+### 4.1 为 css 添加浏览器前缀
+我们将用到 postcss-loader 和 autoprefixer。 `npm i -D postcss-loader autoprefixer`  
+webpack.config.js 片段：
+```js
+module.exports = {
+	module: {
+		rules: [
+			{
+				test: /\.less$/,
+				use: ['style-loader','css-loader','postcss-loader','less-loader'] //从右向左解析
+			}
+		]
+	}
+}
+```
+接下来，我们还需要引入插件 autoprefixer 使其生效，这里有两种方式  
+1. 在项目根目录下创建一个 postcss.config.js 文件，配置如下：
+```js
+module.exports = {
+	plugins: [require('autoprefixer')] //引用该插件即可了
+}
+```
+2. 直接在 webpack.config.js 里配置：  // (未成功，报错，plugins 外面要套一个对象 postcssOptions)
+   webpack.config.js 片段：
+```js
+module.exports = {
+	//...省略一些配置
+	module:{
+		rules: [{
+			test:/\.less$/,
+			use:['style-loader', 'css-loader', 
+			{	//加入此对象来引入 postcss-loader 和 autoprefixer 插件
+				loader: 'postcss-loader',
+				options:{
+					postcssOptions: { // 注意★★★ plugins 外面要套一个对象 postcssOptions
+						plugins:[require('autoprefixer')]
+					}
+				}
+			},
+			'less-loader']
+		}]
+	}
+}
+```
