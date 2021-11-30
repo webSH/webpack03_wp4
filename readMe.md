@@ -3,6 +3,7 @@
 > 	- node.js：v14.16.0
 > 	- webpack: "4.46.0"
 > 	- webpack-cli: "4.9.1"
+> 	- html-webpack-plugin: "4.5.2" //版本 ^5 需要 webpack5 支持
 ## 1.建立项目
 - 新建文件夹：webpack03_wp4
 - 初始化 npm：在此目录命令行执行 `npm init`，一路回车。根目录生成 package.json 文件
@@ -54,3 +55,43 @@ module.exports = {
 执行 `npm run build` 生成以下目录文件
 >- dist
 >   - output.js
+### 3.3 弄一个 html 模板，插入打包的 js 文件
+js 文件打包好，需要引入到 html 文件中使用，且实际工程中，为了防止 js 文件缓存，打包后的 js 文件命名中会加入 hash 值 
+> webpack.config.js 片段
+```js
+ module.exports = {
+	 //省略...
+	 output: {
+		 filename: '[name].[hash:8].js', // 打包后的文件名(包含8位hash值) 
+		 path: path.resolve(__dirname, '../dist') // 打包后的路径
+	 }
+ }
+```
+这时候打包生成的 dist 目录文件如下：
+>- dist
+>	- main.d3089280.js
+
+每当修改了文件，打包 js 名称就会变更，我们想要一个自动更新引入 html 的 js 文件名，现在需要插件 **html-webpack-plugin** 来实现  
+安装：`npm i -D html-webpack-plugin@4`   //版本 ^5 需要 webpack5 支持
+新建一个文件夹 public，里面新建一个 index.html
+配置文件 webpack.config.js 代码如下（片段）：
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+module.exports = {
+	mode: 'development', // 开发模式
+	entry: path.resolve(__dirname, '../src/main.js'), // 入口文件
+	output: {
+		filename: '[name].[hash:8].js', // 打包后的文件名(hash 的取值？html和js修改都会改变)
+		path: path.resolve(__dirname, '../dist') // 打包后的目录
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: path.resolve(__dirname, '../public/index.html') //指定插件处理的文件路径
+		})
+	]
+}
+```
+`npm run build` 生成如下目录：
+>- dist
+>	- main.5f076245.js
+>	- index.html  (main.5f076245.js 会自动插入到 <head>标签中)
