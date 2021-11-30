@@ -28,3 +28,29 @@ main.js
 ok，命令行： `npm run build`，此时如果生成了一个 dist 文件夹，并且内部含有 main.js 说明打包成功！
 >- dist
 >   - main.js
+## 3.搞一个配置文件 **webpack.config.js**
+上面只是对简单的一个 webpack 默认配置的打包命令。下面我们要实现更加丰富的自定义配置  
+### 3.1 新建一个 build 文件夹，里面新建一个 **webpack.config.js**
+>- build
+> 	- webpack.config.js
+### webpack.config.js
+```js
+const path = require('path');
+module.exports = {
+	mode: 'development', // 开发模式
+	entry: path.resolve(__dirname, '../src/main.js'), // 入口文件
+	output: {
+		filename: 'output.js', // 打包后的文件名
+		path: path.resolve(__dirname, '../dist') // 打包后的目录
+	}
+}
+```
+### 3.2 更改我们的打包命令
+```js
+"scripts": {
+	"build": "webpack --config build/webpack.config.js"
+}
+```
+执行 `npm run build` 生成以下目录文件
+>- dist
+>   - output.js
