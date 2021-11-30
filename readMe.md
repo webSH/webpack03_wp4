@@ -9,6 +9,7 @@
 > 	- less-loader: ^7.3.0"
 > 	- style-loader: ^2.0.0"
 > 	- postcss-loader: 4.3.0
+> 	- mini-css-extract-plugin: ^1.6.2
 ## 1.建立项目
 - 新建文件夹：webpack03_wp4
 - 初始化 npm：在此目录命令行执行 `npm init`，一路回车。根目录生成 package.json 文件
@@ -148,7 +149,7 @@ mudule.exports = {
 `npm run build` 注意，生成的css是以 \<style\> 标签的方式插入到 \<script\> 标签之后，每个 css 文件一个 \<style\> 标签。而且是通过 js 插入到，并不是直接打包到 html 文件中的。（如果不引入 loader，打包将不会成功）
 
 ### 4.1 为 css 添加浏览器前缀
-我们将用到 postcss-loader 和 autoprefixer。 `npm i -D postcss-loader autoprefixer`  
+我们将用到 postcss-loader 和 autoprefixer。 `npm i -D postcss-loader@4 autoprefixer`  
 webpack.config.js 片段：
 ```js
 module.exports = {
@@ -190,4 +191,36 @@ module.exports = {
 		}]
 	}
 }
+```
+
+### 1.4.2 拆分 css
+>以上方式 css 代码是以 \<style\> 标签的方式插入到 html 文件当中，如果样式文件很多，全部添加到 html 中，难免显得混乱。这时候我们想用外链形式引入 css 文件怎么做呢？就用到一个插件：
+
+`npm i -D mini-css-extract-plugin@1`
+> webpack 4.0 以前，我们通过 extract-text-webpack-plugin 插件，把 css 样式从 js 文件中提取到单独的 css 文件中。webpack 4.0 以后，官方推荐使用 mini-css-extract-plugin 插件来打包 css 文件
+
+webpack.config.js片段：
+```js
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+module.exports = {
+	// ...省略一些配置
+	module: {
+		rules: [
+			{
+				test: /\.css$|\.less$/,
+				use: [ //不需要 style-loader 了
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'less-loader'
+				]
+			}
+		]
+	}
+},
+plugins: [
+	new MiniCssExtractPlugin({
+		filename: "[name].[hash].css",
+		chunkFilename: "[id].css"
+	})
+]
 ```
