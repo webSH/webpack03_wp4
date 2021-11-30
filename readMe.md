@@ -93,5 +93,5 @@ module.exports = {
 ```
 `npm run build` 生成如下目录：
 >- dist
->	- main.5f076245.js
->	- index.html  (main.5f076245.js 会自动插入到 <head>标签中)
+>	- main.95bf8b8f.js
+>	- index.html  (main.95bf8b8f.js 会自动插入到 <body>标签最后)
