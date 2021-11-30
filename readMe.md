@@ -15,7 +15,7 @@
 - 初始化 npm：在此目录命令行执行 `npm init`，一路回车。根目录生成 package.json 文件
 ## 2.安装 webpack（以及 webpack-cli）
 `npm i -D webpack@4 webpack-cli`
-- npm i -D 为 npm install --save-dev 的缩写
+- <span class="red">npm i -D</span> 为 npm install --save-dev 的缩写
 - npm i -S 为 npm install --save 的缩写
 ### 测试一下
 - 新建文件夹 src，新建一个文件 main.js，写点代码
@@ -256,3 +256,6 @@ webpack.config.js 片段：
 	 ]
  }
 ```
+<style>
+.red{color:red;}
+</style>
