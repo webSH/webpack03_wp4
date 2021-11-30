@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
 	mode: 'development', // 开发模式
@@ -25,6 +26,7 @@ module.exports = {
 			template: path.resolve(__dirname, '../public/head.html'),
 			filename: 'head.html',
 			chunks: ['head'] // 可引入多个 chunks（['head','main']），但顺序不一定和数组一致
-		})
+		}),
+		new CleanWebpackPlugin()
 	]
 }

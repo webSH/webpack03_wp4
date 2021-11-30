@@ -94,35 +94,20 @@ module.exports = {
 `npm run build` 生成如下目录：
 >- dist
 >	- main.95bf8b8f.js
->	- index.html  (main.95bf8b8f.js 会自动插入到 <body>标签最后
+>	- index.html  (main.95bf8b8f.js 会自动插入到 <body>标签最后)
 
-### 3.4 多入口文件的配置
-> 生成多个 html-webpack-plugin 实例来解决这个问题
-webpack.config.js
+### 3.5 残留文件清理
+>每次执行 npm run build 会发现 dist 文件夹里会残留上次打包的文件，这里可以用一个 plugin 来帮我们清除之前打包的残留文件 —— <font color="red">clean-webpack-plugin</font>
+
+<font color="red">要安装一下啊 `npm i -D clean-webpack-plugin`</font>  
+webpack.config.js 片段：
 ```js
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-module.exports = {
-	mode: 'development', //开发模式
-	entry: {
-		main: path.resolve(__dirname, '../src/main.js'), // 入口命名，供 plugins 中使用
-		head: path.resolve(__dirname, '../src/head.js') // 入口命名，供 plugins 中使用
-	},
-	output: {
-		filename: '[name].[hash:8].js', //打包后的文件名称
-		path: path.resolve(__dirname, '../dist') // 打包后的目录
-	},
+const {CleanWebpackPlugin} = require('clean-webpack-plugin)
+mudule.exports = {
+	// 。。。省略其他配置
 	plugins: [
-		new HtmlpackPlugin({
-			template: path.resolve(__dirname, '../public/index.html'), //指定插件处理的文件路径
-			filename: 'index.html',
-			chunks: ['main'] // 与入口文件对应的模块名
-		}),
-		new HtmlpackPlugin({
-			template: path.resove(__dirname, '../public/head.html'),
-			filename: 'head.html',
-			chunks: ['head'] // 与入口文件对应的模块名
-		})
+		new CleanWebpackPlugin()
 	]
 }
-```)
+```
+
