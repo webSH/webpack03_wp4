@@ -7,7 +7,11 @@
 	<title>静态 html 模板文件</title>
 </head>
 <body>
-	<h2>我们使用 webpack-html-plugin 来插入一个 js 文件。将在 &lt;body&gt; 标签最后面</h2>
-	<h2 class="wpBox">我们使用 'style-loader', 'css-loader', 'less-loader' 来正确处理了 main.js 文件中 import 的 less 和 css 文件。</h2>
+	<section class="ct">
+		<h2>我们使用 webpack-html-plugin 来插入一个 js 文件。将在 &lt;body&gt; 标签最后面</h2>
+		<h2 class="wpBox">我们使用 'style-loader', 'css-loader', 'less-loader' 来正确处理了 main.js 文件中 import 的 less 和 css 文件。</h2>
+		<h2>下面来插入一张图片</h2>
+		<img id="logo_wp" />
+	</section>
 </body>
 </html>

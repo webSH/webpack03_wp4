@@ -256,6 +256,35 @@ webpack.config.js 片段：
 	 ]
  }
 ```
-<style>
-.red{color:red;}
-</style>
+## 5. 插入 图片、媒体 等文件 **file-loader、 url-loader**
+`npm i -D file-loader url-loader`
+**file-loader** 就是将文件在进行一些处理后（主要是处理文件名和路径、解析文件 url），并将文件移动到输出的目录中；**url-loader** 与 file-loader 搭配使用，功能与 file-loader 类似，如果文件 <span style="color:red"><= limit</span> 大小，则返回 base64 编码，否则使用 **file-loader** 将文件输出到配置目录。
+> webpack.config.js 片段
+```js
+module.exports = {
+	// ...省略一些配置
+	module: {
+		rules: [
+			// ...
+			{
+				test: /\.(jpe?g|png|gif|svg)$/i, // 图片文件
+				use: [
+					{
+						loader: 'url-loader', //使用 url-loader 的条件在下面
+						options: {
+							limit: 10240, // byte 字节 10240 byte = 10 kB
+							fallback: { //大于10240 byte(10kB)使用 file-loader
+								loader: 'file-loader',
+								options: {
+									name: 'img/[name].[hash:8].[ext]'
+								}
+							}
+						}
+					}
+				]
+			}
+		]
+	}
+}
+```
+> **图片文件需要通过 js import 进来才可以使用以上 loader 来处理，直接插入到 html 的文件不会被 loader 处理**

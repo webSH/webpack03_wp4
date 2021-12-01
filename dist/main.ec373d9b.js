@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/images/site-logo.svg":
+/*!*************************************!*\
+  !*** ./assets/images/site-logo.svg ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"img/site-logo.1fcab817.svg\");\n\n//# sourceURL=webpack:///./assets/images/site-logo.svg?");
+
+/***/ }),
+
 /***/ "./assets/index.css":
 /*!**************************!*\
   !*** ./assets/index.css ***!
@@ -118,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assets_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/index.css */ \"./assets/index.css\");\n/* harmony import */ var _assets_index_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/index.less */ \"./assets/index.less\");\n\r\n\r\nconsole.log('Hello World')\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assets_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/index.css */ \"./assets/index.css\");\n/* harmony import */ var _assets_index_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/index.less */ \"./assets/index.less\");\n/* harmony import */ var _assets_images_site_logo_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/images/site-logo.svg */ \"./assets/images/site-logo.svg\");\n\r\n\r\nconsole.log('Hello World')\r\n\r\ndocument.getElementById(\"logo_wp\").setAttribute('src', _assets_images_site_logo_svg__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ })
 
