@@ -288,3 +288,30 @@ module.exports = {
 }
 ```
 > **图片文件需要通过 js import 进来才可以使用以上 loader 来处理，直接插入到 html 的文件不会被 loader 处理**
+
+## 6 用 babel 转义 js 文件
+为了使我们的 js 代码兼容更多的环境我们需要安装依赖：
+`npm i -D babel-loader @babel/preset-env @babel/core`
+> 注意 babel-loader 与 babel-core 的版本对应关系
+- 1. babel-loader 8.x 对应 babel-core 7.x
+- 2. babel-loader 7.x 对应 babel-core 6.x
+  配置如下 webpack.config.js 片段：
+```js
+module.exports = {
+	//省略一些配置
+	module: {
+		rules:[
+			{
+				test: /\.js$/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
+				},
+				exclude: /node_modules/ // 排除文件夹
+			}
+		]
+	}
+}
+```
