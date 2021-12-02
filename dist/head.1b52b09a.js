@@ -81,56 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/main.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/head.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./assets/images/site-logo.svg":
-/*!*************************************!*\
-  !*** ./assets/images/site-logo.svg ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"img/site-logo.1fcab817.svg\");\n\n//# sourceURL=webpack:///./assets/images/site-logo.svg?");
-
-/***/ }),
-
-/***/ "./assets/index.css":
-/*!**************************!*\
-  !*** ./assets/index.css ***!
-  \**************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./assets/index.css?");
-
-/***/ }),
-
-/***/ "./assets/index.less":
-/*!***************************!*\
-  !*** ./assets/index.less ***!
-  \***************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./assets/index.less?");
-
-/***/ }),
-
-/***/ "./src/main.js":
+/***/ "./src/head.js":
 /*!*********************!*\
-  !*** ./src/main.js ***!
+  !*** ./src/head.js ***!
   \*********************/
-/*! no exports provided */
+/*! exports provided: i, j */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _assets_index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/index.css */ \"./assets/index.css\");\n/* harmony import */ var _assets_index_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/index.less */ \"./assets/index.less\");\n/* harmony import */ var _assets_images_site_logo_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/images/site-logo.svg */ \"./assets/images/site-logo.svg\");\n\n\nconsole.log('Hello World');\n\ndocument.getElementById(\"logo_wp\").setAttribute('src', _assets_images_site_logo_svg__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"i\", function() { return i; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"j\", function() { return j; });\n// export function funcHead() {\n// \tconsole.log('head.js 中的 funcHead()');\n// }\nvar i = 0;\nvar j = 0;\nconsole.log('header.js: this is Header\\'s js');\n\n//# sourceURL=webpack:///./src/head.js?");
 
 /***/ })
 
