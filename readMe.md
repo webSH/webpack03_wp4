@@ -315,3 +315,4 @@ module.exports = {
 	}
 }
 ```
+> 要注意的是，webpack4中只有optimization.namedModules为true，此时moduleId才会为模块路径，否则是数字id。为了方便开发者调试，在development模式下optimization.namedModules参数默认为true
