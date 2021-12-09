@@ -45,7 +45,7 @@ ok，命令行： `npm run build`，此时如果生成了一个 dist 文件夹�
 const path = require('path');
 module.exports = {
 	mode: 'development', // 开发模式
-	entry: path.resolve(__dirname, '../src/main.js'), // 入口文件
+	entry: path.resolve(__dirname, '../src/main.js'), // 入口文件。__dirname 是 node.js 中的一个全局变量，它指向当前执行脚本所在的目录
 	output: {
 		filename: 'output.js', // 打包后的文件名
 		path: path.resolve(__dirname, '../dist') // 打包后的目录
@@ -79,7 +79,7 @@ js 文件打包好，需要引入到 html 文件中使用，且实际工程中�
 
 每当修改了文件，打包 js 名称就会变更，我们想要一个自动更新引入 html 的 js 文件名，现在需要插件 **html-webpack-plugin** 来实现  
 安装：`npm i -D html-webpack-plugin@4`   //版本 ^5 需要 webpack5 支持
-新建一个文件夹 public，里面新建一个 index.html
+新建一个文件夹 public，里面新建一个 index.html (也可不指定 HtmlWebpackPlugin 的 template 属性，HtmlWebpackPlugin 会自动打包出一个最简单的 index.html 文件)
 配置文件 webpack.config.js 代码如下（片段）：
 ```js
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -92,7 +92,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, '../public/index.html') //指定插件处理的文件路径
+			template: path.resolve(__dirname, '../public/index.html') //指定插件处理的文件路径 (也可不指定 HtmlWebpackPlugin 的 template 属性，HtmlWebpackPlugin 会自动打包出一个最简单的 index.html 文件)
 		})
 	]
 }
@@ -125,7 +125,7 @@ import '../assets/index.css' // 正确路径 ../； ./ 是在 main.js 的 src/ �
 import '../assets/index.less'
 ```
 同时，我们也需要一些 loader 来解析我们的 css 文件
-`npm i -D style-loader@2 css-loader@5`
+`npm i -D style-loader@2 css-loader@5` （style-loader 负责向 html 中插入 &lt;style&gt; 标签）
 如果 less 文件的话，需要多安装两个：
 `npm i -D less@4 less-loader@7`
 配置文件 webpack.config.js 片段如下：
@@ -208,7 +208,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.css$|\.less$/,
-				use: [ //不需要 style-loader 了
+				use: [ //不需要 style-loader 了（style-loader 负责向 html 中插入 <style>）
 					MiniCssExtractPlugin.loader,
 					'css-loader',
 					'less-loader'
@@ -315,4 +315,27 @@ module.exports = {
 	}
 }
 ```
-> 要注意的是，webpack4中只有optimization.namedModules为true，此时moduleId才会为模块路径，否则是数字id。为了方便开发者调试，在development模式下optimization.namedModules参数默认为true
+> **关于打包后 bundle.js 文件的一点说明：** 要注意的是，webpack4 中只有 optimization.namedModules 为 true，此时 moduleId 才会为模块路径，否则是数字 id。为了方便开发者调试，在 development 模式下 optimization.namedModules 参数默认为 true
+## 7.安装 webpack-dev-server，本地启动服务，并进行热更新
+### 7.1 `npm i webpack-dev-server -D`
+> webpack.config.js 片段
+```js
+ const Webpack = requir("webpack");
+ module.exports = {
+	 // 省略一些...
+	 devServer: {
+		 port:3000,
+		 hot:true,
+		 contentBase: '../dist' // 如提示 contentBase 属性不正确，请换为 static 属性
+	 },
+	 pugins:[
+		 new Webpack.hotModuleReplacementPlugin()
+	 ]
+ }
+```
+### 7.2 在 package.json 中配置启动命令
+```js
+"scripts": {
+	"dev": "webpack-dev-server --config build/webpack.config.js"
+}
+```

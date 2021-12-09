@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Webpack = require("webpack");
 
 module.exports = {
 	mode: 'development', // 开发模式
@@ -18,12 +19,12 @@ module.exports = {
 		rules:[
 			// {
 			// 	test: /\.css$/, //正则匹配文件名称（类型）
-			// 	use: [MiniCssExtractPlugin.loader,'style-loader', 'css-loader'] // 从右向左 ← 解析原则
+			// 	use: [MiniCssExtractPlugin.loader, 'css-loader'] // 从右向左 ← 解析原则
 			// },
 			{
 				test: /\.css$|\.less$/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader', 
-				{	//加入此对象来引入 postcss-loader 和 autoprefixer 插件
+				use: [MiniCssExtractPlugin.loader, /*'style-loader',*/ 'css-loader', 
+				{	//加入此对象来引入 postcss-loader 和 autoprefixer 插件(使用了 MiniCssExtractPlugin，需要去掉 style-loader)
 					loader: 'postcss-loader',
 					options:{
 						postcssOptions: { // 注意 plugins 外面要套一个对象 postcssOptions
@@ -62,6 +63,12 @@ module.exports = {
 			}
 		],
 	},
+	devServer: {
+		port: 3000,
+		hot: true,
+		open: true,
+		static: path.join(__dirname, "../dist"),
+	},
 	plugins: [
 		// new HtmlWebpackPlugin({
 		// 	template: path.resolve(__dirname, '../public/index.html')
@@ -80,6 +87,7 @@ module.exports = {
 			filename: "[name].[hash].css",
 			chunkFilename: "[id].css"
 		}),
-		new CleanWebpackPlugin()
+		new CleanWebpackPlugin(),
+		new Webpack.HotModuleReplacementPlugin()
 	]
 }
